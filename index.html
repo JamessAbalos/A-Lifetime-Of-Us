@@ -34,7 +34,6 @@ body{
         background-image:url("images/loading-portrait.png");
     }
 
-    /* Hide title and heart in portrait */
     .title,
     .heart{
         display:none;
@@ -42,13 +41,21 @@ body{
 
     #loadingUI{
         position:absolute;
-        left:50%;
-        bottom:20px;
-        transform:translateX(-50%);
-        width:50%;
-        max-width:100px;
-    }
 
+        left:50%;
+        bottom:5%;
+
+        transform:translateX(-50%);
+
+        width:85%;
+        max-width:320px;
+
+        text-align:center;
+
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+    }
 }
 
 /* ==========================
@@ -63,12 +70,20 @@ body{
 
     #loadingUI{
         position:absolute;
+
         left:68%;
         top:54%;
-        transform:translate(-50%, -50%);
-        width:240px;
-    }
 
+        transform:translate(-50%, -50%);
+
+        width:340px;
+
+        text-align:center;
+
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+    }
 }
 
 /* ==========================
@@ -94,7 +109,7 @@ body{
 
     font-family:'Allura', cursive;
 
-    font-size:54px;
+    font-size:30px;
 
     white-space:nowrap;
 
@@ -135,6 +150,8 @@ body{
     gap:10px;
 
     margin-bottom:6px;
+
+    width:100%;
 }
 
 /* ==========================
@@ -143,7 +160,7 @@ body{
 
 #loader{
 
-    width:420px;
+    width:100%;
 
     height:14px;
 
@@ -216,6 +233,27 @@ body{
     margin-top:2px;
 }
 
+/* ==========================
+   FADE OVERLAY
+========================== */
+
+#fadeOverlay{
+
+    position:fixed;
+
+    inset:0;
+
+    background:black;
+
+    opacity:0;
+
+    pointer-events:none;
+
+    transition:opacity 3s ease;
+
+    z-index:9999;
+}
+
 </style>
 
 </head>
@@ -254,15 +292,17 @@ body{
 
 </div>
 
+<div id="fadeOverlay"></div>
+
 <script>
 
 function updateCaption(){
 
-    const isPortrait =
+    const portrait =
         window.matchMedia("(orientation: portrait)").matches;
 
     document.getElementById("captionText").textContent =
-        isPortrait
+        portrait
         ? "I LOVE YOU 3000"
         : "JUST A LITTLE LONGER, MY LOVE";
 }
@@ -280,14 +320,23 @@ const loader = setInterval(function(){
     document.getElementById("fill").style.width =
         progress + "%";
 
-    document.getElementById("percentage").innerText =
+    document.getElementById("percentage").textContent =
         progress + "%";
 
     if(progress >= 100){
+
         clearInterval(loader);
+
+        document.getElementById("fadeOverlay").style.opacity = "1";
+
+        setTimeout(function(){
+
+            window.location.href = "menu.html";
+
+        }, 3000);
     }
 
-},40);
+}, 40);
 
 </script>
 

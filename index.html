@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>A Lifetime Of Us</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Allura&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+    margin:0;
+    height:100vh;
+    overflow:hidden;
+
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+
+    font-family:Arial, sans-serif;
+}
+
+/* ==========================
+   PORTRAIT
+========================== */
+
+@media (orientation: portrait){
+
+    body{
+        background-image:url("images/loading-portrait.png");
+    }
+
+    /* Hide title and heart in portrait */
+    .title,
+    .heart{
+        display:none;
+    }
+
+    #loadingUI{
+        position:absolute;
+        left:50%;
+        bottom:40px;
+        transform:translateX(-50%);
+        width:90%;
+        max-width:420px;
+    }
+
+}
+
+/* ==========================
+   LANDSCAPE
+========================== */
+
+@media (orientation: landscape){
+
+    body{
+        background-image:url("images/loading-landscape.png");
+    }
+
+    #loadingUI{
+        position:absolute;
+        left:78%;
+        top:54%;
+        transform:translate(-50%, -50%);
+        width:540px;
+    }
+
+}
+
+/* ==========================
+   LOADING UI
+========================== */
+
+#loadingUI{
+
+    text-align:center;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+
+/* ==========================
+   TITLE
+========================== */
+
+.title{
+
+    color:#F4D0C6;
+
+    font-family:'Allura', cursive;
+
+    font-size:54px;
+
+    white-space:nowrap;
+
+    line-height:1;
+
+    margin-bottom:4px;
+
+    text-shadow:
+        0 0 3px rgba(244,208,198,.4),
+        0 0 6px rgba(244,208,198,.2);
+}
+
+/* ==========================
+   HEART
+========================== */
+
+.heart{
+
+    color:#F4D0C6;
+
+    font-size:20px;
+
+    margin-bottom:6px;
+}
+
+/* ==========================
+   BAR ROW
+========================== */
+
+.barRow{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:10px;
+
+    margin-bottom:6px;
+}
+
+/* ==========================
+   LOADER
+========================== */
+
+#loader{
+
+    width:420px;
+
+    height:14px;
+
+    border:2px solid rgba(255,255,255,.9);
+
+    border-radius:50px;
+
+    overflow:hidden;
+
+    background:rgba(255,255,255,.05);
+}
+
+#fill{
+
+    width:0%;
+
+    height:100%;
+
+    border-radius:50px;
+
+    background:#F4D0C6;
+
+    box-shadow:
+        0 0 4px #F4D0C6,
+        0 0 8px #F4D0C6;
+}
+
+/* ==========================
+   PERCENTAGE
+========================== */
+
+#percentage{
+
+    color:white;
+
+    font-size:22px;
+
+    min-width:55px;
+
+    text-align:left;
+}
+
+/* ==========================
+   CAPTION
+========================== */
+
+.caption{
+
+    color:white;
+
+    font-size:11px;
+
+    letter-spacing:3px;
+
+    margin-top:4px;
+
+    margin-bottom:6px;
+}
+
+/* ==========================
+   FOOTER
+========================== */
+
+.footer{
+
+    color:#F4D0C6;
+
+    font-size:18px;
+
+    margin-top:2px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div id="loadingUI">
+
+    <div class="title">
+        Preparing our next chapter
+    </div>
+
+    <div class="heart">
+        ♡
+    </div>
+
+    <div class="barRow">
+
+        <div id="loader">
+            <div id="fill"></div>
+        </div>
+
+        <div id="percentage">
+            0%
+        </div>
+
+    </div>
+
+    <div class="caption" id="captionText">
+        JUST A LITTLE LONGER, MY LOVE
+    </div>
+
+    <div class="footer">
+        ─ ♡ ─
+    </div>
+
+</div>
+
+<script>
+
+function updateCaption(){
+
+    const isPortrait =
+        window.matchMedia("(orientation: portrait)").matches;
+
+    document.getElementById("captionText").textContent =
+        isPortrait
+        ? "I LOVE YOU 3000"
+        : "JUST A LITTLE LONGER, MY LOVE";
+}
+
+updateCaption();
+
+window.addEventListener("resize", updateCaption);
+
+let progress = 0;
+
+const loader = setInterval(function(){
+
+    progress++;
+
+    document.getElementById("fill").style.width =
+        progress + "%";
+
+    document.getElementById("percentage").innerText =
+        progress + "%";
+
+    if(progress >= 100){
+        clearInterval(loader);
+    }
+
+},40);
+
+</script>
+
+</body>
+</html>

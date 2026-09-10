@@ -189,6 +189,23 @@ body{
         scale(1.08,1.05);
 }
 
+.menuButton.active{
+
+    background:rgba(244,208,198,.20);
+
+    border-color:#F4D0C6;
+
+    color:#fff;
+
+    transform:scale(1.03);
+
+    box-shadow:
+        0 0 20px rgba(244,208,198,.35);
+
+    text-shadow:
+        0 0 8px rgba(255,255,255,.6);
+}
+
 /* ==========================
    FOOTER
 ========================== */
@@ -222,7 +239,7 @@ body{
     }
 
     .menuButton{
-        width:240px;
+        width:150px;
     }
 
 }
@@ -347,8 +364,6 @@ body{
 
 <script>
 
-/* Fade in menu from black */
-
 window.addEventListener("load", function(){
 
     const overlay =
@@ -365,6 +380,38 @@ window.addEventListener("load", function(){
         overlay.remove();
 
     }, 3100);
+
+    const buttons =
+        document.querySelectorAll(".menuButton");
+
+    document.addEventListener("touchmove", function(e){
+
+        buttons.forEach(btn =>
+            btn.classList.remove("active")
+        );
+
+        const touch =
+            document.elementFromPoint(
+                e.touches[0].clientX,
+                e.touches[0].clientY
+            );
+
+        if(
+            touch &&
+            touch.classList.contains("menuButton")
+        ){
+            touch.classList.add("active");
+        }
+
+    }, { passive:true });
+
+    document.addEventListener("touchend", function(){
+
+        buttons.forEach(btn =>
+            btn.classList.remove("active")
+        );
+
+    });
 
 });
 

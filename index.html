@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 
-<title>A Lifetime Of Us</title>
-
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>A Lifetime Of Us</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,244 +13,180 @@
 
 <style>
 
-body{
+*{
     margin:0;
-    min-height:100vh;
+    padding:0;
+    box-sizing:border-box;
+}
+
+/* ==========================
+   FADE IN OVERLAY
+========================== */
+
+#background{
+
+    position:fixed;
+
+    inset:0;
+
+    background:url("images/menu-bg.jpg")
+    center center/cover no-repeat;
+
+    z-index:-2;
+
+    animation:bgZoom 20s ease-in-out infinite alternate;
+}
+
+body{
+
+    height:100vh;
     overflow:hidden;
 
-    background-size:cover;
-    background-position:center;
-    background-repeat:no-repeat;
+    display:flex;
+    justify-content:center;
+    align-items:center;
 
     font-family:Arial, sans-serif;
 }
 
 /* ==========================
-   PORTRAIT
+   FADE IN OVERLAY
 ========================== */
 
-@media (orientation: portrait){
+#fadeIn{
 
-    body{
-        background-image:url("images/loading-portrait.png");
-        background-position:center center;
-    }
+    position:fixed;
 
-    .title{
-        display:none;
-    }
+    inset:0;
 
-    #loadingUI{
+    background:black;
 
-        position:absolute;
+    opacity:1;
 
-        left:50%;
-        bottom:3%;
+    z-index:9999;
 
-        transform:translateX(-50%);
-
-        width:180px;
-
-        text-align:center;
-
-        display:flex;
-        flex-direction:column;
-        align-items:center;
-    }
-
-    #loader{
-        width:140px;
-    }
-
-    #percentage{
-        font-size:9px;
-    }
-
-    .caption{
-        font-size:8px;
-        letter-spacing:1px;
-        margin-top:2px;
-        margin-bottom:2px;
-    }
-
-    .footer{
-        font-size:12px;
-        margin-top:0;
-    }
+    transition:opacity 3s ease;
 }
 
 /* ==========================
-   LANDSCAPE
+   BACKGROUND OVERLAY
 ========================== */
 
-@media (orientation: landscape){
+.overlay{
 
-    body{
-        background-image:url("images/loading-landscape.png");
-        background-position:center center;
-    }
+    position:absolute;
 
-    #loadingUI{
+    inset:0;
 
-        position:absolute;
-
-        left:68%;
-        top:54%;
-
-        transform:translate(-50%, -50%);
-
-        width:75vw;
-        max-width:320px;
-
-        text-align:center;
-
-        display:flex;
-        flex-direction:column;
-        align-items:center;
-    }
-
-    .title{
-        font-size:clamp(22px, 3vw, 30px);
-    }
-
-    #loader{
-        width:240px;
-    }
-
-    #percentage{
-        font-size:11px;
-    }
+    background:rgba(0,0,0,.60);
 }
 
 /* ==========================
-   LOADING UI
+   MENU
 ========================== */
 
-#loadingUI{
+.menu{
+
+    position:relative;
+
+    z-index:10;
 
     text-align:center;
 
-    display:flex;
-    flex-direction:column;
-    align-items:center;
 }
 
 /* ==========================
    TITLE
 ========================== */
 
-.title{
-
-    color:#F4D0C6;
+.gameTitle{
 
     font-family:'Allura', cursive;
 
-    font-size:30px;
+    color:#F4D0C6;
 
-    white-space:nowrap;
-
-    line-height:1;
-
-    margin-bottom:8px;
+    font-size:70px;
 
     text-shadow:
-        0 0 3px rgba(244,208,198,.4),
-        0 0 6px rgba(244,208,198,.2);
+        0 0 8px rgba(244,208,198,.5),
+        0 0 20px rgba(244,208,198,.2);
+
+    margin-bottom:10px;
+
+    opacity:0;
+
+    transform:translateY(30px);
+
+    animation:titleReveal 1.8s ease forwards;
+
 }
 
 /* ==========================
-   BAR ROW
+   TAGLINE
 ========================== */
 
-.barRow{
-
-    width:100%;
-
-    display:flex;
-
-    justify-content:center;
-
-    margin-bottom:6px;
-}
-
-/* ==========================
-   LOADER
-========================== */
-
-#loader{
-
-    position:relative;
-
-    height:16px;
-
-    border:2px solid rgba(255,255,255,.9);
-
-    border-radius:50px;
-
-    overflow:hidden;
-
-    background:rgba(255,255,255,.05);
-}
-
-/* ==========================
-   FILL
-========================== */
-
-#fill{
-
-    width:0%;
-
-    height:100%;
-
-    border-radius:50px;
-
-    background:#F4D0C6;
-
-    box-shadow:
-        0 0 4px #F4D0C6,
-        0 0 8px #F4D0C6;
-}
-
-/* ==========================
-   PERCENTAGE
-========================== */
-
-#percentage{
-
-    position:absolute;
-
-    top:50%;
-    left:50%;
-
-    transform:translate(-50%, -50%);
+.tagline{
 
     color:white;
 
-    font-weight:bold;
+    font-size:12px;
 
-    text-shadow:
-        0 1px 2px rgba(0,0,0,.9);
+    letter-spacing:4px;
 
-    z-index:2;
+    margin-bottom:30px;
 
-    pointer-events:none;
+    opacity:0;
+
+    transform:translateY(20px);
+
+    animation:fadeUp 1s ease forwards;
+
+    animation-delay:1s;
 }
-
 /* ==========================
-   CAPTION
+   BUTTONS
 ========================== */
 
-.caption{
+.menuButton{
+
+    width:200px;
+
+    padding:10px;
+
+    margin:8px auto;
+
+    border:1px solid rgba(255,255,255,.4);
+
+    border-radius:50px;
+
+    background:rgba(255,255,255,.08);
 
     color:white;
 
-    font-size:11px;
+    font-size:16px;
 
-    letter-spacing:3px;
+    cursor:pointer;
 
-    margin-top:4px;
+   transition:
+    transform .25s ease,
+    background .25s ease,
+    border-color .25s ease,
+    box-shadow .25s ease;
+}
 
-    margin-bottom:6px;
+.menuButton:hover{
+
+    background:rgba(244,208,198,.25);
+
+    border-color:#F4D0C6;
+
+    color:#fff;
+
+    text-shadow:
+        0 0 6px rgba(255,255,255,.6);
+
+    transform:
+        scale(1.08,1.05);
 }
 
 /* ==========================
@@ -258,32 +195,83 @@ body{
 
 .footer{
 
+    margin-top:15px;
+
     color:#F4D0C6;
 
     font-size:18px;
+}
+
+.version{
 
     margin-top:2px;
+
+    color:rgba(255,255,255,.6);
+
+    font-size:12px;
 }
 
 /* ==========================
-   FADE OVERLAY
+   MOBILE
 ========================== */
 
-#fadeOverlay{
+@media (max-width:768px){
 
-    position:fixed;
+    .gameTitle{
+        font-size:64px;
+    }
 
-    inset:0;
+    .menuButton{
+        width:240px;
+    }
 
-    background:black;
+}
 
-    opacity:0;
+@keyframes titleReveal{
 
-    pointer-events:none;
+    from{
 
-    transition:opacity 3s ease;
+        opacity:0;
 
-    z-index:9999;
+        transform:translateY(30px);
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+    }
+}
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(20px);
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+    }
+}
+
+@keyframes bgZoom{
+
+    from{
+
+        transform:scale(1);
+    }
+
+    to{
+
+        transform:scale(1.08);
+    }
 }
 
 </style>
@@ -292,81 +280,93 @@ body{
 
 <body>
 
-<div id="loadingUI">
+<div id="background"></div>
 
-    <div class="title">
-        Preparing our next chapter
+<!-- Fade-in screen -->
+<div id="fadeIn"></div>
+
+<!-- Dark overlay -->
+<div class="overlay"></div>
+
+<!-- Menu -->
+<div class="menu">
+
+    <div class="gameTitle">
+        A Lifetime Of Us
     </div>
 
-    <div class="barRow">
-
-        <div id="loader">
-
-            <div id="fill"></div>
-
-            <div id="percentage">
-                0%
-            </div>
-
-        </div>
-
+    <div class="tagline">
+        EVERY MEMORY BEGINS WITH YOU
     </div>
 
-    <div class="caption" id="captionText">
-        JUST A LITTLE LONGER, MY LOVE
-    </div>
+    <button
+        class="menuButton"
+        onclick="location.href='prologue.html'">
+        New Game
+    </button>
+
+    <button
+        class="menuButton"
+        onclick="alert('Continue feature coming soon')">
+        Continue
+    </button>
+
+    <button
+        class="menuButton"
+        onclick="location.href='save.html'">
+        Save
+    </button>
+
+    <button
+        class="menuButton"
+        onclick="location.href='load.html'">
+        Load
+    </button>
+
+    <button
+        class="menuButton"
+        onclick="location.href='gallery.html'">
+        Memories
+    </button>
+
+    <button
+        class="menuButton"
+        onclick="location.href='credits.html'">
+        Credits
+    </button>
 
     <div class="footer">
         ─ ♡ ─
     </div>
 
-</div>
+    <div class="version">
+        Version 1.0
+    </div>
 
-<div id="fadeOverlay"></div>
+</div>
 
 <script>
 
-function updateCaption(){
+/* Fade in menu from black */
 
-    const portrait =
-        window.matchMedia("(orientation: portrait)").matches;
+window.addEventListener("load", function(){
 
-    document.getElementById("captionText").textContent =
-        portrait
-        ? "I LOVE YOU, 3000."
-        : "JUST A LITTLE LONGER, MY LOVE";
-}
+    const overlay =
+        document.getElementById("fadeIn");
 
-updateCaption();
+    setTimeout(function(){
 
-window.addEventListener("resize", updateCaption);
+        overlay.style.opacity = "0";
 
-let progress = 0;
+    }, 100);
 
-const loader = setInterval(function(){
+    setTimeout(function(){
 
-    progress++;
+        overlay.remove();
 
-    document.getElementById("fill").style.width =
-        progress + "%";
+    }, 3100);
 
-    document.getElementById("percentage").textContent =
-        progress + "%";
-
-    if(progress >= 100){
-
-        clearInterval(loader);
-
-        document.getElementById("fadeOverlay").style.opacity = "1";
-
-        setTimeout(function(){
-
-            window.location.href = "menu.html";
-
-        }, 3000);
-    }
-
-}, 40);
+});
 
 </script>
 

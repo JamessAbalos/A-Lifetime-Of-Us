@@ -19,155 +19,81 @@
     box-sizing:border-box;
 }
 
-/* ==========================
-   FADE IN OVERLAY
-========================== */
-
 #background{
-
     position:fixed;
-
     inset:0;
-
     background:url("images/menu-bg.jpg")
     center center/cover no-repeat;
-
     z-index:-2;
-
     animation:bgZoom 20s ease-in-out infinite alternate;
 }
 
 body{
-
     height:100vh;
     overflow:hidden;
-
     display:flex;
     justify-content:center;
     align-items:center;
-
     font-family:Arial, sans-serif;
 }
 
-/* ==========================
-   FADE IN OVERLAY
-========================== */
-
 #fadeIn{
-
     position:fixed;
-
     inset:0;
-
     background:black;
-
     opacity:1;
-
     z-index:9999;
-
     transition:opacity 3s ease;
 }
 
-/* ==========================
-   BACKGROUND OVERLAY
-========================== */
-
 .overlay{
-
     position:absolute;
-
     inset:0;
-
     background:rgba(0,0,0,.60);
 }
 
-/* ==========================
-   MENU
-========================== */
-
 .menu{
-
     position:relative;
-
     z-index:10;
-
     text-align:center;
-
 }
 
-/* ==========================
-   TITLE
-========================== */
-
 .gameTitle{
-
     font-family:'Allura', cursive;
-
     color:#F4D0C6;
-
     font-size:70px;
-
     text-shadow:
         0 0 8px rgba(244,208,198,.5),
         0 0 20px rgba(244,208,198,.2);
-
     margin-bottom:10px;
-
     opacity:0;
-
     transform:translateY(30px);
-
     animation:titleReveal 1.8s ease forwards;
-
 }
-
-/* ==========================
-   TAGLINE
-========================== */
 
 .tagline{
-
     color:white;
-
     font-size:12px;
-
     letter-spacing:4px;
-
     margin-bottom:30px;
-
     opacity:0;
-
     transform:translateY(20px);
-
     animation:fadeUp 1s ease forwards;
-
     animation-delay:1s;
 }
-/* ==========================
-   BUTTONS
-========================== */
 
 .menuButton{
-
     width:200px;
-
     padding:10px;
-
     margin:8px auto;
-
     border:1px solid rgba(255,255,255,.4);
-
     border-radius:50px;
-
     background:rgba(255,255,255,.08);
-
     color:white;
-
     font-size:16px;
-
     cursor:pointer;
 
-   transition:
+    transition:
     transform .25s ease,
     background .25s ease,
     border-color .25s ease,
@@ -175,62 +101,40 @@ body{
 }
 
 .menuButton:hover{
-
     background:rgba(244,208,198,.25);
-
     border-color:#F4D0C6;
-
     color:#fff;
-
     text-shadow:
         0 0 6px rgba(255,255,255,.6);
+    transform:scale(1.08,1.05);
+}
 
-    transform:
-        scale(1.08,1.05);
+.menuButton:active{
+    transform:scale(0.97);
 }
 
 .menuButton.active{
-
     background:rgba(244,208,198,.20);
-
     border-color:#F4D0C6;
-
     color:#fff;
-
     transform:scale(1.03);
-
     box-shadow:
         0 0 20px rgba(244,208,198,.35);
-
     text-shadow:
         0 0 8px rgba(255,255,255,.6);
 }
 
-/* ==========================
-   FOOTER
-========================== */
-
 .footer{
-
     margin-top:15px;
-
     color:#F4D0C6;
-
     font-size:18px;
 }
 
 .version{
-
     margin-top:2px;
-
     color:rgba(255,255,255,.6);
-
     font-size:12px;
 }
-
-/* ==========================
-   MOBILE
-========================== */
 
 @media (max-width:768px){
 
@@ -245,48 +149,32 @@ body{
 }
 
 @keyframes titleReveal{
-
     from{
-
         opacity:0;
-
         transform:translateY(30px);
     }
-
     to{
-
         opacity:1;
-
         transform:translateY(0);
     }
 }
 
 @keyframes fadeUp{
-
     from{
-
         opacity:0;
-
         transform:translateY(20px);
     }
-
     to{
-
         opacity:1;
-
         transform:translateY(0);
     }
 }
 
 @keyframes bgZoom{
-
     from{
-
         transform:scale(1);
     }
-
     to{
-
         transform:scale(1.08);
     }
 }
@@ -299,13 +187,10 @@ body{
 
 <div id="background"></div>
 
-<!-- Fade-in screen -->
 <div id="fadeIn"></div>
 
-<!-- Dark overlay -->
 <div class="overlay"></div>
 
-<!-- Menu -->
 <div class="menu">
 
     <div class="gameTitle">
@@ -318,37 +203,37 @@ body{
 
     <button
         class="menuButton"
-        onclick="location.href='prologue.html'">
+        onclick="playClickAndGo('prologue.html')">
         New Game
     </button>
 
     <button
         class="menuButton"
-        onclick="alert('Continue feature coming soon')">
+        onclick="playClickAlert()">
         Continue
     </button>
 
     <button
         class="menuButton"
-        onclick="location.href='save.html'">
+        onclick="playClickAndGo('save.html')">
         Save
     </button>
 
     <button
         class="menuButton"
-        onclick="location.href='load.html'">
+        onclick="playClickAndGo('load.html')">
         Load
     </button>
 
     <button
         class="menuButton"
-        onclick="location.href='gallery.html'">
+        onclick="playClickAndGo('gallery.html')">
         Memories
     </button>
 
     <button
         class="menuButton"
-        onclick="location.href='credits.html'">
+        onclick="playClickAndGo('credits.html')">
         Credits
     </button>
 
@@ -362,7 +247,75 @@ body{
 
 </div>
 
+<audio id="menuMusic" loop>
+    <source src="audio/menu-bgm.mp3"
+</audio>
+
+<audio id="clickSound">
+    <source src="audio/menu-click.mp3"
+</audio>
+
 <script>
+
+const music = document.getElementById("menuMusic");
+const clickSound = document.getElementById("clickSound");
+
+function startMusic(){
+
+    music.volume = 0;
+    music.play().catch(err => console.log(err));
+
+    let fadeIn = setInterval(() => {
+
+        if(music.volume < 0.4){
+
+            music.volume += 0.02;
+
+        }else{
+
+            music.volume = 0.4;
+            clearInterval(fadeIn);
+
+        }
+
+    },100);
+
+    document.removeEventListener(
+        "pointerdown",
+        startMusic
+    );
+}
+
+document.addEventListener(
+    "pointerdown",
+    startMusic
+);
+
+function playClickAndGo(page){
+
+    clickSound.currentTime = 0;
+    clickSound.volume = 0.6;
+    clickSound.play();
+
+    setTimeout(() => {
+
+        location.href = page;
+
+    },150);
+}
+
+function playClickAlert(){
+
+    clickSound.currentTime = 0;
+    clickSound.volume = 0.6;
+    clickSound.play();
+
+    setTimeout(() => {
+
+        alert("Continue feature coming soon");
+
+    },150);
+}
 
 window.addEventListener("load", function(){
 

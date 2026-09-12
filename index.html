@@ -17,6 +17,8 @@ body{
     min-height:100vh;
     overflow:hidden;
 
+    background:#000;
+
     background-size:cover;
     background-position:center;
     background-repeat:no-repeat;
@@ -326,12 +328,61 @@ body{
 
 <script>
 
+const portrait =
+    window.matchMedia("(orientation: portrait)").matches;
+
+const bgImage = portrait
+    ? "images/loading-portrait.png"
+    : "images/loading-landscape.png";
+
+const preloadImage = new Image();
+
+preloadImage.onload = () => {
+
+    let progress = 0;
+
+    const loader = setInterval(() => {
+
+        progress++;
+
+        document.getElementById("fill").style.width =
+            progress + "%";
+
+        document.getElementById("percentage").textContent =
+            progress + "%";
+
+        if(progress >= 100){
+
+            clearInterval(loader);
+
+            document.getElementById(
+                "fadeOverlay"
+            ).style.opacity = "1";
+
+            setTimeout(() => {
+
+                window.location.href =
+                    "menu.html";
+
+            },3000);
+        }
+
+    },40);
+
+};
+
+preloadImage.src = bgImage;
+
 function updateCaption(){
 
     const portrait =
-        window.matchMedia("(orientation: portrait)").matches;
+        window.matchMedia(
+            "(orientation: portrait)"
+        ).matches;
 
-    document.getElementById("captionText").textContent =
+    document.getElementById(
+        "captionText"
+    ).textContent =
         portrait
         ? "I LOVE YOU, 3000."
         : "JUST A LITTLE LONGER, MY LOVE";
@@ -339,34 +390,10 @@ function updateCaption(){
 
 updateCaption();
 
-window.addEventListener("resize", updateCaption);
-
-let progress = 0;
-
-const loader = setInterval(function(){
-
-    progress++;
-
-    document.getElementById("fill").style.width =
-        progress + "%";
-
-    document.getElementById("percentage").textContent =
-        progress + "%";
-
-    if(progress >= 100){
-
-        clearInterval(loader);
-
-        document.getElementById("fadeOverlay").style.opacity = "1";
-
-        setTimeout(function(){
-
-            window.location.href = "menu.html";
-
-        }, 3000);
-    }
-
-}, 40);
+window.addEventListener(
+    "resize",
+    updateCaption
+);
 
 </script>
 
